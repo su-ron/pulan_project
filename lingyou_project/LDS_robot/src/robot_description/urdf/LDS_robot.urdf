@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="yuanpan11">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.000160565065449656 0.00286016533166569 0.208500585974295"
+        rpy="0 0 0" />
+      <mass
+        value="2.06790188132279" />
+      <inertia
+        ixx="0.0290886434168063"
+        ixy="-0.000105574759287159"
+        ixz="-1.7205648373966E-06"
+        iyy="0.0259364336140105"
+        iyz="-3.86311727700928E-05"
+        izz="0.0535312001993594" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="left_wheel_link">
+    <inertial>
+      <origin
+        xyz="-6.16084693196113E-07 -0.0331775000801166 3.08429830064433E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.626137999017009" />
+      <inertia
+        ixx="0.000700343581263861"
+        ixy="8.14695758275582E-09"
+        ixz="-2.66333921335159E-08"
+        iyy="0.00127333358768805"
+        iyz="4.11524282007024E-08"
+        izz="0.000700299743195901" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/left_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/left_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="-0.20725 1.5084E-05 0.069504"
+      rpy="0 0 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="left_wheel_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="right_wheel_link">
+    <inertial>
+      <origin
+        xyz="-6.16084684749658E-07 0.0331775000801134 -3.08429829931622E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.626137999016759" />
+      <inertia
+        ixx="0.000700343581263556"
+        ixy="-8.14695762607422E-09"
+        ixz="2.66333923079023E-08"
+        iyy="0.00127333358768766"
+        iyz="4.11524281221561E-08"
+        izz="0.000700299743195774" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/right_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/right_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="0.20725 1.50837180972794E-05 0.0694962036282553"
+      rpy="0 0 1.5707963267949" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_wheel_link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="IMU_link">
+    <inertial>
+      <origin
+        xyz="0 -7.27940114870346E-18 -0.00772134446819678"
+        rpy="0 0 0" />
+      <mass
+        value="0.0195581289501332" />
+      <inertia
+        ixx="2.61910890654139E-06"
+        ixy="-5.03579244451058E-22"
+        ixz="-5.8301663470785E-21"
+        iyy="2.43088811199384E-06"
+        iyz="4.48109496582454E-23"
+        izz="4.29250911843408E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/IMU_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/IMU_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="IMU_joint"
+    type="fixed">
+    <origin
+      xyz="-1.4289E-05 0.175 0.269"
+      rpy="0 0 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="IMU_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="Lidar_link">
+    <inertial>
+      <origin
+        xyz="-6.21551030561274E-05 1.90370153045296E-06 0.0305963842159579"
+        rpy="0 0 0" />
+      <mass
+        value="0.0169564206709369" />
+      <inertia
+        ixx="6.58123918305066E-06"
+        ixy="-2.05451013724043E-10"
+        ixz="-7.85283609103831E-09"
+        iyy="6.52152707698834E-06"
+        iyz="5.81290731645276E-11"
+        izz="1.00998952021924E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/Lidar_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.823529411764706 0.823529411764706 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/Lidar_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Lidar_joint"
+    type="fixed">
+    <origin
+      xyz="-1.5394E-05 0.175 0.197"
+      rpy="0 0 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="Lidar_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="Camera_link">
+    <inertial>
+      <origin
+        xyz="-0.0122760581458287 0.00138154410968368 0.000428689425324022"
+        rpy="0 0 0" />
+      <mass
+        value="0.0509650046640282" />
+      <inertia
+        ixx="3.13412106179662E-05"
+        ixy="5.24676957098003E-07"
+        ixz="3.313267721725E-09"
+        iyy="5.14944429385339E-06"
+        iyz="-1.83220793775386E-08"
+        izz="3.14359744854182E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/Camera_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/Camera_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Camera_joint"
+    type="fixed">
+    <origin
+      xyz="0 0.2077 0.11535"
+      rpy="0 -0.7854 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="Camera_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="Charge_link">
+    <inertial>
+      <origin
+        xyz="-0.00839769425842102 -4.72574465869904E-10 1.78329573330416E-15"
+        rpy="0 0 0" />
+      <mass
+        value="0.0578031104717217" />
+      <inertia
+        ixx="3.49546854989521E-05"
+        ixy="-7.16610850520134E-14"
+        ixz="-5.0935732686843E-19"
+        iyy="6.5407830187358E-06"
+        iyz="2.60632197831486E-10"
+        izz="3.13484130556724E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/Charge_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/Charge_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Charge_joint"
+    type="fixed">
+    <origin
+      xyz="0 0.22334 0.052"
+      rpy="0 0 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="Charge_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="fleft_link">
+    <inertial>
+      <origin
+        xyz="3.6098852304961E-05 -0.0125680375714404 -0.0280416209294268"
+        rpy="0 0 0" />
+      <mass
+        value="0.0644692648959889" />
+      <inertia
+        ixx="1.28203235206611E-05"
+        ixy="2.17246739697773E-08"
+        ixz="2.76788843718096E-08"
+        iyy="1.14322836972242E-05"
+        iyz="-4.24441852397496E-07"
+        izz="1.57992175620806E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/fleft_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/fleft_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="fleft_joint"
+    type="continuous">
+    <origin
+      xyz="-0.105 0.135 0.062"
+      rpy="0 0 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="fleft_link" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="fright_link">
+    <inertial>
+      <origin
+        xyz="-3.60971463973792E-05 0.0125680238062226 -0.0280416053781241"
+        rpy="0 0 0" />
+      <mass
+        value="0.0644692242522017" />
+      <inertia
+        ixx="1.28202776644825E-05"
+        ixy="2.17338474794164E-08"
+        ixz="-2.76786938964116E-08"
+        iyy="1.14322643372769E-05"
+        iyz="4.24415707558846E-07"
+        izz="1.57992124324547E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/fright_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/fright_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="fright_joint"
+    type="continuous">
+    <origin
+      xyz="0.105 0.135 0.062"
+      rpy="0 0 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="fright_link" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="bleft_link">
+    <inertial>
+      <origin
+        xyz="-0.00274668234996364 -0.0125680375714403 -0.0330416209294269"
+        rpy="0 0 0" />
+      <mass
+        value="0.0644692648959889" />
+      <inertia
+        ixx="1.28203235206594E-05"
+        ixy="2.17246736978843E-08"
+        ixz="2.76788846101941E-08"
+        iyy="1.14322836483689E-05"
+        iyz="-4.24441852398229E-07"
+        izz="1.57992175132252E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/bleft_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/bleft_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="bleft_joint"
+    type="continuous">
+    <origin
+      xyz="-0.105 -0.13022 0.067"
+      rpy="0 0 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="bleft_link" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="bright_link">
+    <inertial>
+      <origin
+        xyz="-0.00281887834877126 0.0125680238062225 -0.033041605378124"
+        rpy="0 0 0" />
+      <mass
+        value="0.0644692242522021" />
+      <inertia
+        ixx="1.28202776644608E-05"
+        ixy="2.17338475145015E-08"
+        ixz="-2.76786938179229E-08"
+        iyy="1.14322646190427E-05"
+        iyz="4.24415707558662E-07"
+        izz="1.57992127142417E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/bright_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://yuanpan11/meshes/bright_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="bright_joint"
+    type="continuous">
+    <origin
+      xyz="0.105 -0.13022 0.067"
+      rpy="0 0 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="bright_link" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+</robot>
