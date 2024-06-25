@@ -1,0 +1,50 @@
+<launch>
+    <arg name="model" />
+    <arg name="gui" default="false" />
+
+    <param name="robot_description" textfile="$(find autolabor_description)/urdf/autolabor_pro1_track_suit.urdf" />
+    <param name="use_gui" value="$(arg gui)" />
+    <!-- turn on lidar开启思岚雷达  -->
+   <node name="fslidar_front"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
+    <param name="serial_port"         type="string" value="/dev/rplidar_laser"/>
+    <param name="serial_baudrate"     type="int"    value="115200"/>
+    <param name="frame_id"            type="string" value="lidar_front"/>
+    <param name="inverted"            type="bool"   value="false"/>
+    <param name="angle_compensate"    type="bool"   value="true"/>
+    <param name="scan_topic"            type="string"   value="/scan_front"/>
+  </node>
+
+    <node  pkg="laser_filters"   type="scan_to_scan_filter_chain"    name="lidar_filter_front">
+     <remap from="/scan" to="/scan_front" />
+   <remap from ="/scan_filtered" to = "/scan_1"/>
+   <rosparam command="load" file ="$(find turn_on_wheeltec_robot)/param_common/front_laser_config.yaml"/>
+   </node>
+
+    <node name="fslidar_back"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
+    <param name="serial_port"         type="string" value="/dev/rplidar_laser_2"/>
+    <param name="serial_baudrate"     type="int"    value="115200"/>
+    <param name="frame_id"            type="string" value="lidar_back"/>
+    <param name="inverted"            type="bool"   value="false"/>
+    <param name="angle_compensate"    type="bool"   value="true"/>
+    <param name="scan_topic"            type="string"   value="/scan_back"/>
+  </node>
+
+   <node    pkg="laser_filters"   type="scan_to_scan_filter_chain"  name="lidar_filter_back">
+    <remap from="/scan" to="/scan_back" />
+   <remap from ="/scan_filtered" to = "/scan_2"/>
+   <rosparam command="load" file ="$(find turn_on_wheeltec_robot)/param_common/back_laser_config.yaml"/>
+   </node>
+
+      <!-- turn on base_serial 开启底层单片机的控制节点  -->
+   <include file="$(find turn_on_wheeltec_robot)/launch/include/base_serial.launch" />
+   
+   <arg name="mapping_mode"  default="cartographer" doc="opt: gmapping, hector,cartographer,karto"/>
+    <!-- 开启cartographer建图算法  -->
+  <group if="$(eval mapping_mode == 'cartographer')">
+  <!--这个功能包的路径是：/opt/ros/melodic/share/cartographer_ros-->
+  <include file="$(find cartographer_ros)/launch/demo_revo_lds.launch" />
+   
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+    <!--node name="rviz" pkg="rviz" type="rviz" args="-d $(find turn_on_wheeltec_robot/rviz/create_map.rviz" /-->
+  </group>  
+  </launch>
