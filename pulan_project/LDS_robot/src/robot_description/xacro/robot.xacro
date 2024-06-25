@@ -1,5 +1,0 @@
-<robot name="LDS_robot" xmlns:xacro="http://wiki.ros.org/xacro">
-    <xacro:include filename="base.xacro" />
-    <xacro:include filename="camera.xacro" />
-    <xacro:include filename="laser.xacro" />
-</robot>
