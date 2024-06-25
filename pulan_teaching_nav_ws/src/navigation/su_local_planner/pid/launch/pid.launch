@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<launch>
+  <!--控制-->
+    <arg name="p_window"  default="0.5" doc=""/> 
+    <arg name="goal_dist_tolerance"  default="0.2" doc=""/>
+    <arg name="rotate_tolerance"  default="0.5"   doc=""/>
+    <arg name="max_v"     default="0.5" doc=""/> 
+    <arg name="min_v"    default="0.0"   doc=""/> 
+    <arg name="max_v_inc"      default="0.5"   doc=""/> 
+
+    <arg name="max_w"     default="1.57" doc=""/> 
+    <arg name="min_w"    default="0.0"   doc=""/> 
+    <arg name="max_w_inc"      default="1.57"   doc=""/> 
+
+    <arg name="k_v_p"     default="1.00" doc=""/> 
+    <arg name="k_v_i"    default="0.01"   doc=""/> 
+    <arg name="k_v_d"      default="0.10"   doc=""/> 
+
+    <arg name="k_w_p"     default="1.00" doc=""/> 
+    <arg name="k_w_i"    default="0.01"   doc=""/> 
+    <arg name="k_w_d"      default="0.10"   doc=""/> 
+
+    <arg name="k_theta"      default="0.5"   doc=""/> 
+    <arg name="cmd_vel_mode"      default="true"   doc=""/> 
+    <arg name="robot_type"      default="ackermann"   doc="opt:yuanpan,ackermann"/> 
+    <!-- for amcl -->    
+    <arg name="init_x" default="0.0" />
+    <arg name="init_y" default="0.0" />
+    <arg name="init_a" default="0.0" />
+    <!-- for controller -->
+    <arg name="controller"  default="pid" doc="opt:pid"/> 
+
+    <!--  ****** pid ******  -->
+    <node name="pid_planner" pkg="pid_planner" type="pid_planner" output="screen" if="$(eval controller == 'pid')" >
+        <rosparam file="$(find pid_planner)/params/config/pid_planner_params.yaml" command="load" />
+        <!--rosparam file="/home/ubuntu/pulan_teaching_nav_ws/src/navigation/su_local_planner/pid/config/pid_planner_params.yaml" command="load" /-->
+        <remap from="/pid/odom" to="/odom" />
+        <remap from="/pid/global_plan" to="/move_base/TrajectoryPlannerROS/global_plan" />
+        <remap from="/pid/goal" to="/move_base_simple/goal" />
+        <remap from="/pid/ackermann_cmd" to="/ackermann_cmd" />
+    </node>
+</launch>

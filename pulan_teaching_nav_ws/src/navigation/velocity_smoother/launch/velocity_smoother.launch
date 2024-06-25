@@ -1,0 +1,111 @@
+<!--
+  YOCS velocity smoother launcher
+  -->
+
+<launch>
+  <!--控制-->
+    <arg name="debug_mode"  default="false" doc="show debug info (bool)"/> 
+    <arg name="pwm_radian"  default="450" doc="non scaled factor pwm/radian (steering)"/>
+    <arg name="neutral_pt"  default="-5.0"   doc="steering neutral point (degree)"/>
+    <arg name="use_imu"     default="true" doc="use imu for ekf (bool)"/> 
+    <arg name="time_out"    default="1.0"   doc="communication time out, unit: sec"/> 
+    <arg name="output"      default="log"   doc="log or screen"/> 
+    <arg name="cmd_vel_mode"      default="true" /> 
+    <!-- for amcl -->    
+    <arg name="init_x" default="0.0" />
+    <arg name="init_y" default="0.0" />
+    <arg name="init_a" default="0.0" />
+
+    <!--  ****** Pure Pursuit ******  -->
+    <node name="Pure_Pursuit" pkg="hypharos_minicar" type="Pure_Pursuit" output="screen" >
+        <rosparam file="$(find hypharos_minicar)/launch/params/pure_pursuit/pure_pursuit_params.yaml" command="load" />
+        <param name="cmd_vel_mode"              value="$(arg cmd_vel_mode)"/> 
+        <remap from="/pure_pursuit/odom" to="/odom" />
+        <remap from="/pure_pursuit/global_plan" to="/move_base/NavfnROS/plan" />
+        <!-- <remap from="/pure_pursuit/local_plan" to="/move_base/TrajectoryPlannerROS/dwa_plan1" /> -->
+        <!-- <remap from="/pure_pursuit/goal" to="/move_base/goal" /> -->
+        <remap from="/pure_pursuit/ackermann_cmd" to="/ackermann_cmd"/>
+        <remap from="/plt_cmd_vel" to="/round_cmd_vel" />
+    </node>
+<!--速度平滑-->
+  <arg name="node_name"                default="velocity_smoother"/>
+  <arg name="raw_cmd_vel_topic"        default="/round_cmd_vel"/><!--cmd_vel-->
+  <arg name="smooth_cmd_vel_topic"     default="/plt_cmd_vel"/>
+  <arg name="robot_cmd_vel_topic"      default="/robot_cmd_vel"/>
+  <arg name="odom_topic"               default="/odom"/>
+  <arg name="fault_diagnostic_topic"   default="/fault_diagnostic_data"/>
+  <arg name="fault_recovery_topic"     default="/fault_recovery_data"/>
+
+ 
+  <arg name="is_debug"                 default="false"/>     <!-- debug监视　　开关 -->
+
+  <arg name="Q_noise"                  default="0.1"/>
+  <arg name="R_noise"                  default="0.5"/>
+  <arg name="use_calmanFilter"         default="true"/>      <!-- 卡尔曼滤波器　开关 -->
+    
+  <arg name="sample_N"                 default="5"/>
+  <arg name="use_movingFilter"         default="true"/>       <!-- 滑动滤波器　　开关 -->
+
+  <arg name="use_limit_back"           default="true"/>       <!-- 后退状态限制　开关 -->
+  
+  <arg name="use_limit_speedup"        default="false"/>      <!-- 轮毂电机消抖　开关 -->
+
+  <node pkg="velocity_smoother" type="velocity_smoother_node" name="$(arg node_name)" output="screen">
+        
+    <!-- parameters -->
+    <param name="speed_lim_v"          value="1.5"/>
+    <param name="speed_lim_w"          value="5.4"/>
+    <param name="accel_lim_v"          value="1.0"/>
+    <param name="accel_lim_w"          value="4.5"/>
+    <param name="frequency"            value="100.0"/>
+    <param name="decel_factor"         value="1.0"/>
+
+    <!-- 是否开启 debug 模式 -->
+    <param name="is_debug"             value="$(arg is_debug)"/> 
+
+    <!-- 卡尔曼滤波 -->
+    <param name="Q_noise"              value="$(arg Q_noise)"/>           <!-- 测量值 -->
+    <param name="R_noise"              value="$(arg R_noise)"/>           <!-- 预测值 -->
+    <param name="use_calmanFilter"     value="$(arg use_calmanFilter)"/>
+
+    <!-- 滑动滤波 -->
+    <param name="move_sample_N"        value="$(arg sample_N)"/>          <!-- 滑动样本数 -->
+    <param name="use_movingFilter"     value="$(arg use_movingFilter)"/>    
+
+    <!-- 后退功能限制 -->
+    <param name="use_limit_back"       value="$(arg use_limit_back)"/>
+
+    <!-- 起步减速 平滑处理 -->
+    <param name="use_limit_speedup"    value="$(arg use_limit_speedup)"/>
+
+    <!-- 错误状态监测   -->
+    <param name="odom_delay_s"         value="0.10"/>                     <!-- odom数据延迟时间：ms -->
+    <param name="dev_num_max"          value="20.0"/>                     <!-- 偏差次数上限 -->
+    <param name="observe_time_s"       value="2.0"/>                      <!-- 里程监测时间 -->
+    <param name="vel_dev"              value="0.40"/>                     <!-- 前进 Vx 速度偏差量 -->
+    <param name="rot_dev"              value="0.40"/>                     <!-- 旋转 Vw 速度偏差量 -->
+    <param name="sum_x_dev"            value="0.50"/>                      <!-- x方向里程偏差 -->
+    <param name="sum_y_dev"            value="0.50"/>                      <!-- y方向里程偏差 -->
+    <param name="sum_w_dev"            value="0.50"/>                      <!-- w方向里程偏差 -->
+
+    <!-- Robot velocity feedback type:
+      0 - none
+      1 - odometry
+      2 - end robot commands 
+    -->
+    <param name="robot_feedback" value="0"/>
+
+    <!-- velocity commands I/O -->
+    <remap from="$(arg node_name)/raw_cmd_vel"    to="$(arg raw_cmd_vel_topic)"/>
+    <remap from="$(arg node_name)/smooth_cmd_vel" to="$(arg smooth_cmd_vel_topic)"/>
+
+    <!-- Robot velocity feedbacks -->
+    <remap from="$(arg node_name)/robot_cmd_vel"  to="$(arg robot_cmd_vel_topic)"/>
+    <remap from="$(arg node_name)/odometry"       to="$(arg odom_topic)"/>
+
+    <!-- 状态检测及发布消息 -->
+    <remap from="$(arg node_name)/fault_diagnostic_data"     to="$(arg fault_diagnostic_topic)"/>
+    <remap from="$(arg node_name)/fault_recovery_data"       to="$(arg fault_recovery_topic)"/>
+
+  </node>
+</launch>

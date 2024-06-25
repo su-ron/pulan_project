@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<launch>
+<!--polynomial-->
+       <node name="polynomial_curve" pkg="mpc_polynomial" type="polynomial_curve" output="screen"/>
+ 
+    <!--  ****** MPC ******  -->
+    <node name="MPC_tracking" pkg="mpc_polynomial" type="tracking_reference_trajectory" output="screen">
+        <!--rosparam file="$(find hypharos_minicar)/launch/params/mpc/mpc_params.yaml" command="load" /-->
+        <rosparam file="$(find mpc_polynomial)/launch/params/mpc/mpc_local_params.yaml" command="load" />
+        <!--rosparam file="$(find mpc_ros)/params/mpc_local_params.yaml" command="load" /-->
+        <!--rosparam file="$(find mpc_ros)//params/mpc_local_epitrochoid_params.yaml" command="load" /-->
+        <remap from="/mpc/global_plan" to="/desired_path" />
+        <remap from="/mpc/goal" to="/move_base_simple/goal" />
+        <remap from="/mpc/round_cmd_vel" to="/round_cmd_vel" />
+    </node>
+</launch>
