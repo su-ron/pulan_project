@@ -28,6 +28,8 @@
 
 项目实现效果：https://github.com/su-ron/pulan_project/blob/main/README.assets/pulan_robot.mp4
 
+![image-20241126215833545](README.assets/image-20241126215833545.png)
+
 
 
 <video src="README.assets/pulan_robot.mp4"></video>
